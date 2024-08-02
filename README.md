@@ -27,3 +27,21 @@ Release 44 is released to correct an oversight on my part in the new method Open
 ## Written By
 
 Gregory Green
+
+## Bug seek() not seeking.
+
+When I use  SEEK(BINTOC(tnWB)+BINTOC(tnId), tcCursor, "id") using tnWB=1 and tnId=140 the seek command stop in record workbook(1) and id(79), this is a bug in seek() command.
+Like in method getcursorrecord:
+
+LPARAMETERS tcCursor, tnWB, tnId
+
+RETURN SEEK(BINTOC(tnWB)+BINTOC(tnId), tcCursor, "id")
+
+To round a bug i can use 0h+ in front of BINTOC and getcursorrecord changes to:
+
+LPARAMETERS tcCursor, tnWB, tnId
+
+RETURN SEEK(0h+BINTOC(tnWB)+BINTOC(tnId), tcCursor, "id")
+
+The same thing is necessary for all use of BINTOC.
+
